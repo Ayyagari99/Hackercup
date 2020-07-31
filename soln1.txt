@@ -1,0 +1,90 @@
+#include <iostream>
+#include <string>
+#include <bits/stdc++.h>
+using namespace std;
+int j=0;
+
+int stringers(int i, int N, char C[]){
+     
+   //only two elements in the array and both same
+   if(C[i+2]=='0' && C[i]==C[i+1]){
+     
+    cout<<"Case #"<<j<<": N"<<endl;
+    return 0;
+   }
+ 
+  //only one element in the array
+  if(N==1){
+    cout<<"Case #"<<j<<": Y"<<endl;
+    return 0;
+   }
+ 
+  //When all the three are same and no other elements left
+  if( C[i]==C[i+1] && C[i+1]==C[i+2] && N==3) {    
+   
+   cout<<"Case #"<<j<<": N"<<endl;
+    return 0;
+  }
+ 
+ 
+  //RECURSIVE CALLS
+  //When first three are same
+  if(C[i]==C[i+1] && C[i+1]==C[i+2])
+  {   i++;
+      stringers(i,N,C);
+  }
+ 
+  else
+ {   //take the first three characters
+     auto str = std::string(1,C[i])+C[i+1]+C[i+2];
+   
+     //see what the first three characters are: Case1= They become A
+     if ( str.compare("AAB")==0 or str.compare("ABA")==0 or str.compare("BAA")==0  )
+    {
+       C[i]='A';
+       for(int x=i+1; x<N; x++)
+       C[x]=C[x+2];
+   
+       for(int y=N-2; y<N; y++)
+       C[y]='0';
+   
+      stringers(0,N-2,C);
+   }
+    //see what the first three characters are: Case2= They become B
+   else if ( str.compare("BBA")==0 or str.compare("BAB")==0 or str.compare("ABB")==0  )
+   {
+       C[i]='B';
+       for(int x=i+1; x<=N; x++)
+       C[x]=C[x+2];
+   
+       for(int y=N-2; y<N; y++)
+       C[y]='0';
+   
+      stringers(0,N-2,C);
+   }
+ }
+
+  return 0;
+}
+
+
+int main() {
+int N=0;
+int T=0;
+cin>>T;
+
+for(j=1;j<=T;j++){
+cin>>N;
+char C[N];
+for(int x=0; x<N; x++)
+cin>>C[x];
+int i=0;
+stringers(i,N,C);
+}
+
+
+
+
+
+}
+
